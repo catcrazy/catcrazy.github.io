@@ -450,10 +450,12 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    // querySelector out of for loop
+    var randompizzaContainer = document.querySelectorAll(".randomPizzaContainer")
+    for (var i = 0; i < randompizzaContainer.length; i++) {
+      var dx = determineDx(randompizzaContainer[i], size);
+      var newwidth = (randompizzaContainer[i].offsetWidth + dx) + 'px';
+      randompizzaContainer[i].style.width = newwidth;
     }
   }
 
@@ -469,8 +471,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
+//  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -506,6 +509,7 @@ function updatePositions() {
 
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
+    //calculate each position
     var phase = Math.sin(x + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
@@ -528,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   var windowHeight = (window.innerHeight || document.documentElement.clientHeight || 1080); // IE fix. 1080 if something goes wrong.
-  var bgPizzasToGen = Math.ceil(windowHeight / s) * cols;
+  var bgPizzasToGen = Math.ceil(windowHeight / s) * cols;  // calculation out of for loop
   for (var i = 0; i < bgPizzasToGen; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
